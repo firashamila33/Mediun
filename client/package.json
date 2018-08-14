@@ -1,0 +1,61 @@
+{
+  "name": "msvpress",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": {
+    "/auth/google": {
+      "target": "http://localhost:5000"
+    },
+    "/api/*": {
+      "target": "http://localhost:5000"
+    }
+  },
+  "engines": {
+    "node": "8.1.1",
+    "npm": "5.0.3"
+  },
+  "dependencies": {
+    "apollo-boost": "^0.1.10",
+    "apollo-cache-persist": "^0.1.1",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "draft-convert": "^2.1.2",
+    "draft-js": "^0.10.5",
+    "draft-js-alignment-plugin": "^2.0.3",
+    "draft-js-emoji-plugin": "^2.0.6",
+    "draft-js-focus-plugin": "^2.1.0",
+    "draft-js-hashtag-plugin": "^2.0.3",
+    "draft-js-image-plugin": "^2.0.5",
+    "draft-js-linkify-plugin": "^2.0.1",
+    "draft-js-plugins-editor": "^2.1.1",
+    "draft-js-resizeable-plugin": "^2.0.6",
+    "draft-js-side-toolbar-plugin": "^2.0.4",
+    "draft-js-static-toolbar-plugin": "^2.0.2",
+    "draft-js-video-plugin": "^2.0.1",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "materialize-css": "^0.100.2",
+    "medium-draft": "^0.5.6",
+    "react": "^16.4.1",
+    "react-apollo": "^2.1.8",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.21.0"
+  }
+}
