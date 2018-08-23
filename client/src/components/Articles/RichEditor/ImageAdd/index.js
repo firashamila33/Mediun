@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import {FiImage} from 'react-icons/fi'
 
-export default class VideoAdd extends Component {
+export default class ImageAdd extends Component {
   // Start the popover closed
   state = {
     url: '',
@@ -20,7 +21,7 @@ export default class VideoAdd extends Component {
   // Note: make sure whenever a click happens within the popover it is not closed
   onPopoverClick = () => {
     this.preventNextClose = true;
-  };
+  }
 
   openPopover = () => {
     if (!this.state.open) {
@@ -41,41 +42,42 @@ export default class VideoAdd extends Component {
     this.preventNextClose = false;
   };
 
-  addVideo = () => {
+  addImage = () => {
     const { editorState, onChange } = this.props;
-    onChange(this.props.modifier(editorState, { src: this.state.url }));
+    onChange(this.props.modifier(editorState, this.state.url));
   };
 
   changeUrl = (evt) => {
     this.setState({ url: evt.target.value });
-  };
+  }
 
   render() {
-
     return (
-      <div className="addVideo" >
+      <div className="addImage">
         <button
-          className={this.state.open ? "addVideoPressedButton" : "addVideoButton"}
+          className={this.state.open ? "addImagePressedButton" : "addImageButton"}
           onMouseUp={this.openPopover}
           type="button"
         >
-          <i class="far fa-file-video"></i>
+          <div style={{marginTop:'7px'}}>
+             <FiImage/>
+          </div>
         </button>
         <div
-          className={this.state.open ? "addVideoPopover" : "addVideoClosedPopover"}
+          className={this.state.open ? "addImagePopover" : "addImageClosedPopover"}
           onClick={this.onPopoverClick}
         >
           <input
             type="text"
-            placeholder="Paste the video url …"
-            className="addVideoInput"
+            placeholder="Paste the image url …"
+            className="addImageInput"
             onChange={this.changeUrl}
             value={this.state.url}
           />
           <button
-            className="addVideoConfirmButton"
+            className="addImageConfirmButton"
             type="button"
-            onClick={this.addVideo}
+            onClick={this.addImage}
           >
             Add
           </button>

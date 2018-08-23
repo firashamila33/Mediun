@@ -1,40 +1,35 @@
 import React, {Component} from "react";
-import {connect} from 'react-redux';
-import {graphql, compose} from "react-apollo";
-import gql from "graphql-tag";
-import {setUserlogin} from "../actions";
-import {AUTH_TOKEN} from "../actions/types";
 
 class Login extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            email: '',
-            password: ''
-        }
-    }
+    // constructor() {
+    //     super();
+    //     this.state = {
+    //         email: '',
+    //         password: ''
+    //     }
+    // }
 
-    _confirm = async () => {
-        const {email, password} = this.state;
+    // _confirm = async () => {
+    //     const {email, password} = this.state;
 
-        const result = await this.props.loginMutation({
-            variables: {
-                email,
-                password,
-            }
-        });
-        const {authToken} = result.data.createUserToken;
-        this.props.setUserlogin(authToken);
-        this._saveUserData(authToken);
-        if (this.props.loginToken != null) {
-            this.props.history.push('/home');
-        }
-    };
+    //     const result = await this.props.loginMutation({
+    //         variables: {
+    //             email,
+    //             password,
+    //         }
+    //     });
+    //     const {authToken} = result.data.createUserToken;
+    //     this.props.setUserlogin(authToken);
+    //     this._saveUserData(authToken);
+    //     if (this.props.loginToken != null) {
+    //         this.props.history.push('/home');
+    //     }
+    // };
 
-    _saveUserData = (token) => {
-        localStorage.setItem(AUTH_TOKEN, token)
-    };
+    // _saveUserData = (token) => {
+    //     localStorage.setItem(AUTH_TOKEN, token)
+    // };
 
     
 
@@ -100,23 +95,24 @@ class Login extends Component {
 }
 
 
-function mapStateToProps({loginToken}) {
-    return {loginToken};
-}
+// function mapStateToProps({loginToken}) {
+//     return {loginToken};
+// }
 
 
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    createUserToken(email: $email, password: $password) {
-     user{
-      lastName
-      firstName
-    }
-    authToken
-    }
-  }
-`
+// const LOGIN_MUTATION = gql`
+//   mutation LoginMutation($email: String!, $password: String!) {
+//     createUserToken(email: $email, password: $password) {
+//      user{
+//       lastName
+//       firstName
+//     }
+//     authToken
+//     }
+//   }
+// `
 
-export default connect(mapStateToProps, {setUserlogin})(compose(
-    graphql(LOGIN_MUTATION, {name: 'loginMutation'})
-)(Login));
+// export default connect(mapStateToProps, {setUserlogin})(compose(
+//     graphql(LOGIN_MUTATION, {name: 'loginMutation'})
+// )(Login));
+export default Login

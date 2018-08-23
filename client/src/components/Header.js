@@ -1,26 +1,27 @@
 import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {AUTH_TOKEN} from "../actions/types";
-import {setUserlogin} from "../actions";
+import {Link
+} from 'react-router-dom';
+// import {connect} from 'react-redux';
+// import {AUTH_TOKEN} from "../actions/types";
+// import {setUserlogin} from "../actions";
 
 class Header extends Component {
 
-    constructor(){
-        super();
-        this.state={
-            location :''
-        }
-    }
-    componentDidMount(){
-        this.setState({ location: this.props.location.pathname });
+    // constructor(){
+    //     super();
+    //     this.state={
+    //         location :''
+    //     }
+    // }
+    // componentDidMount(){
+    //     this.setState({ location: this.props.location.pathname });
         
-    }
-    _signOut = () => {
-        localStorage.setItem(AUTH_TOKEN, null);
-        this.props.setUserlogin(null);
-        this.props.history.push('/login');
-    };
+    // }
+    // _signOut = () => {
+    //     localStorage.setItem(AUTH_TOKEN, null);
+    //     this.props.setUserlogin(null);
+    //     this.props.history.push('/login');
+    // };
 
     renderTopBar() {
         // if (this.props.loginToken != null) {
@@ -51,15 +52,17 @@ class Header extends Component {
                     <div className="collapse navbar-collapse" id="navbarMenu">
                         <ul className="navbar-nav mx-auto">
                             <li className="nav-item">
-                                <Link to={"/home"} className={`nav-link ${this.state.location === '/home' ? 'active' : '' }`} 
+                                {/* <Link to={"/home"} className={`nav-link ${this.state.location === '/home' ? 'active' : '' }`}  
                                 onClick={e => this.setState({ location: '/home' })}
-                                >Home</Link>
+                                >Home</Link>*/}
+                                Home
                             </li>
 
                             <li className="nav-item">
-                                <Link to={"/newarticle"} className={`nav-link ${this.state.location === '/newarticle' ? 'active' : '' }`}
+                                {/* <Link to={"/newarticle"} className={`nav-link ${this.state.location === '/newarticle' ? 'active' : '' }`} 
                                 onClick={e => this.setState({ location: '/newarticle' })}
-                                >New Article</Link>
+                                >New Article</Link>*/}
+                                HOME
                             </li>
 
                         </ul>
@@ -99,8 +102,10 @@ class Header extends Component {
 
 }
 
-function mapStateToprops({loginToken}) {
-    return {loginToken}
-}
+// function mapStateToprops({loginToken}) {
+//     return {loginToken}
+// }
 
-export default connect(mapStateToprops, {setUserlogin})(withRouter(Header));
+// export default connect(mapStateToprops, {setUserlogin})(withRouter(Header));
+
+export default Header
