@@ -32,3 +32,7 @@
   .headlineButton:focus {
     background: #f3f3f3;
   }
+
+  .DraftEditor-root{
+    min-height: 250px;
+  }

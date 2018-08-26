@@ -4,8 +4,7 @@ import Header from './components/Header';
 import {BrowserRouter, Route} from "react-router-dom";
 import Home from './components/Home';
 import Login from './components/Login';
-import ArticlePreview from './components/Articles/ArticlePreview';
-import ArticleForm from './components/Articles/ArticleForm';
+import ArticleWorkspace from './components/Articles/workspace';
 
 class App extends Component {
 
@@ -16,11 +15,11 @@ class App extends Component {
                 <BrowserRouter>
                     <div>
                         <Header/>
-                            <Route exact path="/newarticle" component={ArticleForm}/>
+                            <Route exact path="/newarticle" component={ArticleWorkspace}/>
+                            <Route exact path="/newarticle/preview" component={ArticleWorkspace}/>
                             <Route exact path="/home" component={Home}/>
                             <Route exact path="/" component={Home}/>
                             <Route exact path="/login" component={Login}/>
-                            <Route exact path="/previewArticle" component={ArticlePreview}/>
                         <Footer/>
                     </div>
                 </BrowserRouter>

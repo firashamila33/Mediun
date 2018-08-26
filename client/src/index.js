@@ -19,6 +19,13 @@ const networkInterface = createNetworkInterface({
   credentials: 'same-origin',
 });
 
+//create network latency simulation
+// networkInterface.use([{
+//   applyMiddleware(req, next) {
+//     setTimeout(next, 500);
+//   },
+// }]);
+
 
 const client = new ApolloClient({
   networkInterface

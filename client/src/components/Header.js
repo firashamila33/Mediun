@@ -1,111 +1,98 @@
 import React, {Component} from 'react';
 import {Link
 } from 'react-router-dom';
-// import {connect} from 'react-redux';
-// import {AUTH_TOKEN} from "../actions/types";
-// import {setUserlogin} from "../actions";
+
+
 
 class Header extends Component {
 
-    // constructor(){
-    //     super();
-    //     this.state={
-    //         location :''
-    //     }
-    // }
-    // componentDidMount(){
-    //     this.setState({ location: this.props.location.pathname });
-        
-    // }
-    // _signOut = () => {
-    //     localStorage.setItem(AUTH_TOKEN, null);
-    //     this.props.setUserlogin(null);
-    //     this.props.history.push('/login');
-    // };
+     constructor(){
+         super();
+         this.state={
+             location :'/newarticle',
+             isScrolled:false,
+         }
+         
+     }
 
-    renderTopBar() {
-        // if (this.props.loginToken != null) {
-            return (<div className="top-bar">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-4 social">
-                            <a href="https://twitter.com/MonSuperVoisin" target={'_blank'}><span className="fa fa-twitter"></span></a>
-                            <a href="https://www.facebook.com/monsupervoisin/" target={'_blank'}><span className="fa fa-facebook"></span></a>
-                            <a href="https://www.monsupervoisin.fr/" target={'_blank'}><span className="fa fa-safari" target={'_blank'}></span></a>
-                        </div>
-                        <div className="col-5"></div>
-                        <div className="col-3 social">
-                            <button className="btn btn-outline-light" onClick={() => this._signOut()}>Sign out</button>
-                        </div>
-                    </div>
-                </div>
-            </div>);
-        // }
+    componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
     }
 
-    renderNavBar() {
-        // if (this.props.loginToken != null) {
-            return (<nav className="navbar navbar-expand-md  navbar-light bg-light">
-                <div className="container">
-
-
-                    <div className="collapse navbar-collapse" id="navbarMenu">
-                        <ul className="navbar-nav mx-auto">
-                            <li className="nav-item">
-                                {/* <Link to={"/home"} className={`nav-link ${this.state.location === '/home' ? 'active' : '' }`}  
-                                onClick={e => this.setState({ location: '/home' })}
-                                >Home</Link>*/}
-                                Home
-                            </li>
-
-                            <li className="nav-item">
-                                {/* <Link to={"/newarticle"} className={`nav-link ${this.state.location === '/newarticle' ? 'active' : '' }`} 
-                                onClick={e => this.setState({ location: '/newarticle' })}
-                                >New Article</Link>*/}
-                                HOME
-                            </li>
-
-                        </ul>
-
-                    </div>
-                </div>
-            </nav>);
-        // }
+    componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
     }
 
+    handleScroll = () => {
+        let {scrollY} = window;
+        if(scrollY > 74){
+            this.setState({isScrolled:true})
+        }
+        if(scrollY < 74){
+            this.setState({isScrolled:false})
+        }
+      };
+   
     render() {
+        let text =`A work by Firas Hamila, I implemented a rich text editing modules
+        based on Draft JS plugins  by Facebook & @DraftJsPlugins `
+        let newText = text.split ('\n').map ((item, i) => <p style={{fontSize:'15px',opacity:'0.7',marginBottom:'0px'}} key={i}>{item}</p>);
         return (
-            <header role="banner">
-                {this.renderTopBar()}
-                <div className="container logo-wrap">
-                    <div className="row pt-5">
-                        <div className="col-12 text-center">
-                            <a className="absolute-toggle d-block d-md-none" data-toggle="collapse" href="#navbarMenu"
-                               role="button" aria-expanded="false" aria-controls="navbarMenu"><span
-                                className="burger-lines"></span></a>
-                            <Link to={"/home"}>
-                            <img
-                                src={`${process.env.PUBLIC_URL}/images/logo_header.png`}
-                                className="rounded mx-auto d-block col-sm-5"
-                                alt=""
-                            /></Link>
+            <header style={{opacity:`${this.state.isScrolled ? '0.85' : '1'}`,position:'fixed',transition:' .3s'}} role="banner">
+                <div className="top-bar" style={{paddingBottom:'0px'}}>
+                    <div className="container">
+                        <div className="row"  style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                            <div >
+                                <img
+                                    src={`${process.env.PUBLIC_URL}/images/logo_header.png`}
+                                    style={{height:`${this.state.isScrolled ? '50px' : '80px'}`,width:`${this.state.isScrolled ? '100px' : '150px'}`,transition:' .3s'}}
+                                    alt=""
+                                />
+                            </div>
+                            { this.state.isScrolled &&
+                                <p style={{marginTop:'15px'}}><strong>A work By Firas Hamila</strong></p>
+                            }
+
+                            { !this.state.isScrolled &&
+                                <div style={{marginTop:'10px'}}>
+                                    {newText}
+                                    <div style={{display:'flex',flexDirection:'row'}}>
+                                        <p style={{fontSize:'15px',opacity:'0.7'}} >Technologies used : ReactJS, GraphQL, NodeJS ... => view</p>
+                                        
+                                        <a target="_blank" href='https://github.com/firashamila33/Mediun' style={{opacity:'0.5',marginLeft:'10px',marginBottom:'10px'}}>Github Repo</a>
+                                    </div>
+
+                                </div>
+                            }
+                                
+                           
+                            <div style={{marginTop:`${this.state.isScrolled ? '0px' : '15px'}`,transition:' .3s'}} className=" social">
+                                <ul className="navbar-nav mx-auto" style={{display:'flex',flexDirection:'row',marginRight:'100px'}}>
+                                    <li className="nav-item">
+                                        <Link to={"/home"} className={`nav-link active`}
+                                            onClick={e => this.setState({ location: '/home' })}
+                                            style={{marginRight:'12px',fontSize:'30px'}}
+                                        >Home</Link>
+                                    </li>
+
+                                    <li className="nav-item">
+                                        <Link to={"/newarticle"} className={`nav-link ${this.state.location === '/newarticle' ? 'active' : ''}`}
+                                            onClick={e => this.setState({ location: '/newarticle' })}
+                                            style={{marginLeft:'12px',fontSize:'30px'}}
+                                        >New Article</Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                {this.renderNavBar()}
             </header>
-
-
         );
     }
 
 
 }
 
-// function mapStateToprops({loginToken}) {
-//     return {loginToken}
-// }
-
-// export default connect(mapStateToprops, {setUserlogin})(withRouter(Header));
 
 export default Header
+

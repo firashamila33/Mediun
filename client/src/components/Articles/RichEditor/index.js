@@ -16,6 +16,7 @@
 
   import ImageAdd from './ImageAdd';
   import VideoAdd from './VideoAdd';
+  import {preloadedContent} from './initialState'
 
   import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
   import createImagePlugin from 'draft-js-image-plugin';
@@ -135,10 +136,18 @@ const plugins = [
       };
       const content = window.localStorage.getItem('articleContent');
 
+
       if (content) {
         this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
-      } else { //delete this else statement to see the text above in the editor by default
-        this.state.editorState = EditorState.createEmpty();
+      } else {
+        //this.state.editorState = EditorState.createEmpty(); <-- for empty editor content 
+        this.state.editorState = EditorState.createWithContent(convertFromRaw(preloadedContent));
+      }
+    }
+
+    componentDidMount(){
+      if(!this.props.isBeforeMutation){
+        this.setState({editorState: EditorState.createEmpty() })
       }
     }
 
@@ -161,6 +170,7 @@ const plugins = [
       this.editor.focus();
     };
     render() {
+      let {isReadOnly} = this.props
       return (
         <div>
             <div className="editor" onClick={this.focus}>
@@ -169,28 +179,35 @@ const plugins = [
                 onChange={this.onChange}
                 plugins={plugins}
                 ref={(element) => { this.editor = element; }}
+                readOnly={isReadOnly}
               />
-              <Toolbar />
-               <AlignmentTool /> 
-              <EmojiSuggestions />
+              {!isReadOnly &&
+                <div>
+                  <Toolbar />
+                  <AlignmentTool /> 
+                  <EmojiSuggestions />
+                </div>
+              }
             </div>
 
-            <div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
-              <ImageAdd
+            {!isReadOnly &&
+              <div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
+                <ImageAdd
+                    editorState={this.state.editorState}
+                    onChange={this.onChange}
+                    modifier={imagePlugin.addImage}
+                  />
+                  <div style={{marginLeft:'20px',marginRight:'20px'}}>
+                  <EmojiSelect />
+                  </div>
+
+                  <VideoAdd
                   editorState={this.state.editorState}
                   onChange={this.onChange}
-                  modifier={imagePlugin.addImage}
-                />
-                <div style={{marginLeft:'20px',marginRight:'20px'}}>
-                <EmojiSelect />
-                </div>
-
-                <VideoAdd
-                editorState={this.state.editorState}
-                onChange={this.onChange}
-                modifier={videoPlugin.addVideo}
-                />         
-            </div>
+                  modifier={videoPlugin.addVideo}
+                  />         
+              </div>
+          }
                                                            
       </div>
       );

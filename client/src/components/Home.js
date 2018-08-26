@@ -5,51 +5,67 @@ class Home extends Component {
   
     render() {
          return(
-                <div>
-                     <section className="site-section pt-5">
+                <div style={{paddingTop:'160px'}}>
+                     <section className="site-section pt-5" style={{paddingBottom:'75px'}}>
                         <div className="container">
                         <div className="row">
                                 <div className="col-md-6">
-                                    <h2 className="mb-4">Recent Press Articles</h2>
+                                    <h2 className="mb-4">Recent Articles</h2>
                                 </div>
                             </div>
                             <div className="row">
-                                <div  className="col-md-6 col-lg-4">
-                                    <a className="a-block d-flex align-items-center height-md"
-                                            style={{backgroundImage: "url('images/img_4.jpg')"}}>
+                                <div  className="col-md-3 col-log-3">
+                                    <a  className="a-block d-flex align-items-center height-md"
+                                            style={{backgroundImage: "url('images/img_4.jpg')",height:'300',width:'250',margin:'0px'}}>
                                         <div className="text">
                                             <div className="post-meta">
-                                                <span className="category">Food</span>
-                                                <span className="mr-2">March 15, 2018 </span>  
+                                                
+                                                <span style={{fontWeight:'normal'}} className="mr-2">March 15, 2018 </span>  
                                             </div>
-                                            <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+                                            <p style={{fontSize:'20px',fontWeight:'bold'}}>There’s a Cool New Way for Men to Wear Socks and Sandals</p>
                                         </div>
                                     </a>
                                 </div>
-                                <div  className="col-md-6 col-lg-4">
-                                    <a className="a-block d-flex align-items-center height-md"
-                                            style={{backgroundImage: "url('images/img_4.jpg')"}}>
+                                <div  className="col-md-3 col-log-3">
+                                    <a  className="a-block d-flex align-items-center height-md"
+                                            style={{backgroundImage: "url('images/img_4.jpg')",height:'300',width:'250',margin:'0px',padding:'10px'}}>
                                         <div className="text">
                                             <div className="post-meta">
-                                                <span className="category">Food</span>
+                                                
                                                 <span className="mr-2">March 15, 2018 </span>  
                                             </div>
-                                            <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+                                            <p style={{fontSize:'20px',fontWeight:'bold'}}>There’s a Cool New Way for Men to Wear Socks and Sandals</p>
                                         </div>
                                     </a>
                                 </div>
-                                <div  className="col-md-6 col-lg-4">
-                                    <a className="a-block d-flex align-items-center height-md"
-                                            style={{backgroundImage: "url('images/img_4.jpg')"}}>
+                                <div  className="col-md-3 col-log-3">
+                                    <a  className="a-block d-flex align-items-center height-md"
+                                            style={{backgroundImage: "url('images/img_4.jpg')",height:'300',width:'250',margin:'0px',padding:'10px'}}>
                                         <div className="text">
                                             <div className="post-meta">
-                                                <span className="category">Food</span>
+                                                
                                                 <span className="mr-2">March 15, 2018 </span>  
                                             </div>
-                                            <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+                                            <p style={{fontSize:'20px',fontWeight:'bold'}}>There’s a Cool New Way for Men to Wear Socks and Sandals</p>
                                         </div>
                                     </a>
                                 </div>
+                                <div  className="col-md-3 col-log-3">
+                                    <a  className="a-block d-flex align-items-center height-md"
+                                            style={{backgroundImage: "url('images/img_4.jpg')",height:'300',width:'250',margin:'0px',padding:'10px'}}>
+                                        <div className="text">
+                                            <div className="post-meta">
+                                                
+                                                <span className="mr-2">March 15, 2018 </span>  
+                                            </div>
+                                            <p style={{fontSize:'20px',fontWeight:'bold'}}>There’s a Cool New Way for Men to Wear Socks and Sandals</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                
+
+                                
                             </div>
                         </div>
                     </section> 
@@ -57,7 +73,7 @@ class Home extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h2 className="mb-4">Enjoy Press Articles</h2>
+                                    <h2 className="mb-4">Enjoy Reading</h2>
                                 </div>
                             </div>
                             <div className="row blog-entries">
@@ -88,19 +104,6 @@ class Home extends Component {
     }
 }
 
-// function mapStateToProps({loginToken}) {
-//     return {loginToken};
-// }
 
-// const getAllArticle = gql`
-// query AllPressArticle($enabled: Boolean) {
-//   allPressArticles(enabled: $enabled) {
-//     id
-//     title
-//     description
-//     createdAt
-//   }
-// }
-// `;
 
 export default Home;
