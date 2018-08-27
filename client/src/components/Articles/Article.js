@@ -7,12 +7,13 @@ export default class Article extends Component {
     };
 
     render() {
+        let {isReadOnly,isDisplay,isEditedArticle,isNew} = this.props
         return (
             /**
-             * @prop isBeforeMutation : to konw if this is a preview while editing the article or after a user clicked on an article
+             * @prop isExistingArticleDiplay : to konw if this is a preview while editing the article or after a user clicked on an article
              * @prop isReadOnly to disable article editing
              */
-            <RichEditor isBeforeMutation={this.props.isBeforeMutation} isReadOnly={this.props.isReadOnly}/> 
+            <RichEditor isReadOnly={isReadOnly} isDisplay={isDisplay} isEditedArticle={isEditedArticle} isNew={isNew}/> 
         );
     }
 }

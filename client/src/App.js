@@ -15,8 +15,12 @@ class App extends Component {
                 <BrowserRouter>
                     <div>
                         <Header/>
-                            <Route exact path="/newarticle" component={ArticleWorkspace}/>
-                            <Route exact path="/newarticle/preview" component={ArticleWorkspace}/>
+                            <Route exact path="/newarticle/edit" component={ArticleWorkspace}/>
+                            <Route exact path="/newarticle/edit/preview" component={ArticleWorkspace}/>
+                            <Route exact path="/myarticle/edit" component={ArticleWorkspace}/>
+                            <Route exact path="/myarticle/edit/preview" component={ArticleWorkspace}/>
+                            <Route exact path="/myarticle/display" component={ArticleWorkspace}/>
+
                             <Route exact path="/home" component={Home}/>
                             <Route exact path="/" component={Home}/>
                             <Route exact path="/login" component={Login}/>

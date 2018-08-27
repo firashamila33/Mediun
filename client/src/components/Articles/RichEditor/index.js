@@ -2,6 +2,8 @@
   import React, { Component } from 'react';
   import Editor, { createEditorStateWithText, composeDecorators } from 'draft-js-plugins-editor';
   import {convertToRaw ,convertFromRaw, EditorState} from 'draft-js';
+  import * as actions from '../../../actions'
+  import { connect } from 'react-redux'
   import {
     ItalicButton,
     BoldButton,
@@ -125,7 +127,7 @@ const plugins = [
                 each time the component is mounted : MSV BLOG EDITING,
                 in that case go to else statelent and remove it so Editor state wont be charged with empy content`;
 
-  export default class CustomToolbarEditor extends Component {
+ class CustomToolbarEditor extends Component {
 
 
     constructor(){
@@ -138,34 +140,57 @@ const plugins = [
 
 
       if (content) {
+        console.log("nsééééti fi stateeeeeb 1")
         this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
       } else {
+        console.log("nsééééti fi stateeeee 2")
         //this.state.editorState = EditorState.createEmpty(); <-- for empty editor content 
         this.state.editorState = EditorState.createWithContent(convertFromRaw(preloadedContent));
       }
     }
 
-    componentDidMount(){
-      if(!this.props.isBeforeMutation){
-        this.setState({editorState: EditorState.createEmpty() })
+    componentWillMount(){
+      console.log('props in editor : ',this.props)
+      console.log('state in editor : ',this.state)
+      let { isDisplay, isEditedArticle, isNew, editedArticle, selectedArticle } = this.props;
+      
+
+      if(isDisplay){
+        console.log('mouch hnéé ya zebbi 1')
+        this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(selectedArticle.description)) )}) // <<--- content of selectedArticle
       }
+      if(isEditedArticle){
+        console.log('hnééé ya zebbi')
+        this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(editedArticle.description)) )}) 
+      }
+    
     }
 
     componentDidCatch(error, info) {
-      console.log(error, info);
-      window.localStorage.removeItem('articleContent');
+      console.log(error,info);
+      
     }
 
     onChange = (editorState) => {
-       this.saveImmutableContent(editorState.getCurrentContent());
+      console.log('mouch hnéé ya zebbi 2')
+
+      let {isNew, isEditedArticle, editArticle } = this.props;
+      let { id, title }= this.props.editedArticle
+       if(isNew){
+        console.log('mouch hnéé ya zebbi 3')
+        window.localStorage.setItem('articleContent', JSON.stringify(convertToRaw(editorState.getCurrentContent()))); // <<--- do not save to localstorage if its not a new article
+       }
+       if(isEditedArticle){
+        console.log('mouch hnéé ya zebbi 4')
+        editArticle({ id, title, description: JSON.stringify(convertToRaw(editorState.getCurrentContent())) })
+       }
        this.setState({
          editorState
-       });     
+       });  
+
     };
 
-    saveImmutableContent = (content) => {
-       window.localStorage.setItem('articleContent', JSON.stringify(convertToRaw(content)));
-    } 
+    
     focus = () => {
       this.editor.focus();
     };
@@ -173,7 +198,7 @@ const plugins = [
       let {isReadOnly} = this.props
       return (
         <div>
-            <div className="editor" onClick={this.focus}>
+            <div className={`${!isReadOnly ? 'editor' : 'editorReadOnly'}`} onClick={this.focus}>
               <Editor
                 editorState={this.state.editorState}
                 onChange={this.onChange}
@@ -214,4 +239,8 @@ const plugins = [
     }
   }
 
+  function mapStateToProps({selectedArticle, editedArticle}){
+    return {selectedArticle, editedArticle}
+  }
 
+  export default connect(mapStateToProps,actions)(CustomToolbarEditor)

@@ -69,15 +69,15 @@ class Header extends Component {
                             <div style={{marginTop:`${this.state.isScrolled ? '0px' : '15px'}`,transition:' .3s'}} className=" social">
                                 <ul className="navbar-nav mx-auto" style={{display:'flex',flexDirection:'row',marginRight:'100px'}}>
                                     <li className="nav-item">
-                                        <Link to={"/home"} className={`nav-link active`}
-                                            onClick={e => this.setState({ location: '/home' })}
+                                        <Link to={"/home"}  style={{opacity:`${this.state.location === '/home' ? '1' : '0'}`,transition:' .3s'}} className="nav-link active"
+                                            onClick={() => this.setState({ location: '/home' })}
                                             style={{marginRight:'12px',fontSize:'30px'}}
                                         >Home</Link>
                                     </li>
 
                                     <li className="nav-item">
-                                        <Link to={"/newarticle"} className={`nav-link ${this.state.location === '/newarticle' ? 'active' : ''}`}
-                                            onClick={e => this.setState({ location: '/newarticle' })}
+                                        <Link to={"/newarticle/edit"}  style={{opacity:`${this.state.location === '/newarticle/edit' ? '1' : '0'}`,transition:' .3s'}}className="nav-link"
+                                            onClick={() => this.setState({ location: '/newarticle/edit' })}
                                             style={{marginLeft:'12px',fontSize:'30px'}}
                                         >New Article</Link>
                                     </li>

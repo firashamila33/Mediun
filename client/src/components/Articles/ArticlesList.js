@@ -19,7 +19,7 @@ const ArticlesList = ({ data: {loading, error, articles }}) => {
   return (
     <div className="row">
       { articles.map( (article) => 
-        (<ArticleCard key={article.id} description={article.description} title={article.title}/>))
+        (<ArticleCard key={article.id} article={article} />))
       }
     </div>
   );

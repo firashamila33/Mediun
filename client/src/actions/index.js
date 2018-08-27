@@ -1,16 +1,17 @@
-import { SET_USER_TOKEN, FETCH_ARTICLES} from './types';
+import { SELECTED_ARTICLE, EDITED_ARTICLE } from './types';
 
-export const fetchAllArticles = (articles) => async dispatch => {
-    dispatch({
-        type : FETCH_ARTICLES,
-        payload : articles
+
+
+export const selectArticle = (article) => {
+    return({
+        type : SELECTED_ARTICLE,
+        payload : article
     });
 };
 
-
-export const setUserlogin = (token) => async dispatch => {
-    dispatch({
-        type : SET_USER_TOKEN,
-        payload : token
+export const editArticle = (editedArticle) => {
+    return({
+        type : EDITED_ARTICLE,
+        payload : editedArticle
     });
 };
