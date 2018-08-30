@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
@@ -19,16 +20,16 @@ const networkInterface = createNetworkInterface({
   credentials: 'same-origin',
 });
 
-//create network latency simulation
-// networkInterface.use([{
-//   applyMiddleware(req, next) {
-//     setTimeout(next, 500);
-//   },
-// }]);
-
+const wsClient = new SubscriptionClient(`ws://localhost:4002/subscriptions`, {
+  reconnect: true,
+});
+const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+  networkInterface,
+  wsClient,
+);
 
 const client = new ApolloClient({
-  networkInterface
+  networkInterface: networkInterfaceWithSubscriptions
 });
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));

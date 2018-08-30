@@ -1,6 +1,5 @@
 import {
   makeExecutableSchema,
-  addMockFunctionsToSchema,
 } from 'graphql-tools';
 
 import { resolvers } from './resolvers';
@@ -8,12 +7,20 @@ import { resolvers } from './resolvers';
 const typeDefs = `
 type Article {
   id: ID!
+  createdAt: String
   title: String                
   description: String
 }
 
+type ArticleFeed {
+  cursor: String!
+  articles: [Article]!
+}
+
+
 type Query {
-  articles: [Article]   
+  articles: [Article]  
+  articleFeed(cursor: String): ArticleFeed 
 }
 
 type Mutation {
@@ -22,6 +29,9 @@ type Mutation {
   deleteArticle(id: ID!): Article
 }
 
+type Subscription {
+  articleAdded: Article
+}
 
 `;
 

@@ -140,27 +140,21 @@ const plugins = [
 
 
       if (content) {
-        console.log("nsééééti fi stateeeeeb 1")
         this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
       } else {
-        console.log("nsééééti fi stateeeee 2")
         //this.state.editorState = EditorState.createEmpty(); <-- for empty editor content 
         this.state.editorState = EditorState.createWithContent(convertFromRaw(preloadedContent));
       }
     }
 
     componentWillMount(){
-      console.log('props in editor : ',this.props)
-      console.log('state in editor : ',this.state)
       let { isDisplay, isEditedArticle, isNew, editedArticle, selectedArticle } = this.props;
       
 
       if(isDisplay){
-        console.log('mouch hnéé ya zebbi 1')
         this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(selectedArticle.description)) )}) // <<--- content of selectedArticle
       }
       if(isEditedArticle){
-        console.log('hnééé ya zebbi')
         this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(editedArticle.description)) )}) 
       }
     
@@ -172,16 +166,13 @@ const plugins = [
     }
 
     onChange = (editorState) => {
-      console.log('mouch hnéé ya zebbi 2')
 
       let {isNew, isEditedArticle, editArticle } = this.props;
       let { id, title }= this.props.editedArticle
        if(isNew){
-        console.log('mouch hnéé ya zebbi 3')
         window.localStorage.setItem('articleContent', JSON.stringify(convertToRaw(editorState.getCurrentContent()))); // <<--- do not save to localstorage if its not a new article
        }
        if(isEditedArticle){
-        console.log('mouch hnéé ya zebbi 4')
         editArticle({ id, title, description: JSON.stringify(convertToRaw(editorState.getCurrentContent())) })
        }
        this.setState({
