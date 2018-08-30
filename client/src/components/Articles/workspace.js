@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {BrowserRouter, Route} from "react-router-dom";
-import { gql, graphql, compose } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import validator from 'validator';
 import { connect } from 'react-redux'
 import moment from 'moment'
@@ -51,15 +51,12 @@ class ArticleWorkspace extends Component {
   }
 
   componentWillMount() {
+    window.scrollTo(0, 0);
+    let { editedArticle, selectedArticle, editArticle } = this.props
     let { pathname } = this.props.history.location
     if (validator.contains(pathname, '/myarticle') && !this.props.selectedArticle.id) {
       this.props.history.push('/home')
     }
-  }
-  componentDidMount() {
-    window.scrollTo(0, 0);
-
-    let { pathname } = this.props.history.location
 
     if (validator.contains(pathname, '/preview')) {
       this.setState({ isPreview: true })
@@ -71,13 +68,16 @@ class ArticleWorkspace extends Component {
         this.setState({ title })
       }
 
-    } else {
-      this.setState({ title: this.props.selectedArticle.title })
+    } 
+    if(validator.equals(pathname, '/myarticle/edit/preview') || validator.equals(pathname, '/myarticle/edit')){
+        this.setState({ title: editedArticle.title })
+        console.log("SETTING STATE OF TITLE  1 :  ", editedArticle.title)
     }
+   
     if (validator.contains(pathname, '/display')) {
-      this.setState({ isExistingArticleDiplay: true })
+      editArticle(selectedArticle)
+      this.setState({ isExistingArticleDiplay: true, title: selectedArticle.title })
     }
-
   }
 
   togglePreview() {
@@ -86,12 +86,16 @@ class ArticleWorkspace extends Component {
 
   handleTitleChange(e) {
     let title = e.target.value
+    let { editedArticle, editArticle } = this.props
     if (this.state.isNew) {
       window.localStorage.setItem('articleTitle', JSON.stringify(title));
     } else {
-      let { id, description } = this.props.selectedArticle;
-      this.props.editArticle({ id, title: e.target.value, description });
+      let { id, description } = editedArticle;
+      editArticle({ id, title: e.target.value, description });
     }
+    
+    console.log("SETTING STATE OF TITLE  3 :  ", editedArticle.title);
+
     this.setState({ title });
   }
 
@@ -140,13 +144,13 @@ class ArticleWorkspace extends Component {
       variables: { id, title, description },
       update: (store, { data: { editArticle } }) => {
         const data = store.readQuery({ query: articlesListQuery });
-        var index = _.findIndex(data.articles, { id });
-        data.articles.splice(index, 1, editArticle);
+        var index = _.findIndex(data.articles, { id,description });
+        if(index !== -1){
+          data.articleFeed.articles.splice(index, 1, editArticle);
+        }
         store.writeQuery({ query: articlesListQuery, data });
       },
     }).then(() => {
-      window.localStorage.removeItem('articleContent');
-      window.localStorage.removeItem('articleTitle');
       history.push('/home')
     })
   }
@@ -233,10 +237,12 @@ function mapStateToProps({selectedArticle, editedArticle}){
 
 
 
-export default connect(mapStateToProps, actions)(
+export default connect(
+  mapStateToProps,
+  actions
+)(
   compose(
-    graphql(SUBMIT_MUTATION, { name: 'submitArticleMutation' }),
-    graphql(EDIT_MUTATION, { name: 'editArticleMutation' })
-  )
-    (ArticleWorkspace)
+    graphql(SUBMIT_MUTATION, { name: "submitArticleMutation" }),
+    graphql(EDIT_MUTATION, { name: "editArticleMutation" })
+  )(ArticleWorkspace)
 );

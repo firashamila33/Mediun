@@ -19,7 +19,7 @@ export const resolvers = {
       }
 
       cursor = parseInt(cursor);
-      const limit = 3;
+      const limit = 6;
 
       const newestArticleIndex = articles.findIndex(
         article => article.createdAt === cursor
@@ -57,9 +57,6 @@ export const resolvers = {
       const editedArticle = { id, title, description, createdAt: moment().unix() };
       var index = _.findIndex(articles, {id});
       articles.splice(index, 1, editedArticle);
-      console.log('id to  ediiit : ',id)
-      console.log('I found it heeeer ==> : ',index)
-      console.log(editedArticle);
       return editedArticle;
     },
     deleteArticle: (root, args) => {

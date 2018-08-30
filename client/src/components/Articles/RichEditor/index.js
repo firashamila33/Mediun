@@ -148,7 +148,7 @@ const plugins = [
     }
 
     componentWillMount(){
-      let { isDisplay, isEditedArticle, isNew, editedArticle, selectedArticle } = this.props;
+      let { isDisplay, isEditedArticle, editedArticle, selectedArticle } = this.props;
       
 
       if(isDisplay){

@@ -28,8 +28,18 @@ const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
   wsClient,
 );
 
+function dataIdFromObject(result) {
+  if (result.__typename) {
+    if (result.id !== undefined) {
+      return `${result.__typename}:${result.id}`;
+    }
+  }
+  return null;
+}
+
 const client = new ApolloClient({
-  networkInterface: networkInterfaceWithSubscriptions
+  networkInterface: networkInterfaceWithSubscriptions,
+  dataIdFromObject,
 });
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));

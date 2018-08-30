@@ -41,10 +41,6 @@ class ArticlesList extends Component{
     window.scrollTo(0, 0);
    }
 
-   futo(){
-
-   }
-
   render(){
     let {data: {loading, error, articleFeed }, loadOlderArticles} = this.props;
 
