@@ -168,12 +168,12 @@ const plugins = [
     onChange = (editorState) => {
 
       let {isNew, isEditedArticle, editArticle } = this.props;
-      let { id, title }= this.props.editedArticle
+      let { _id, title }= this.props.editedArticle
        if(isNew){
         window.localStorage.setItem('articleContent', JSON.stringify(convertToRaw(editorState.getCurrentContent()))); // <<--- do not save to localstorage if its not a new article
        }
        if(isEditedArticle){
-        editArticle({ id, title, description: JSON.stringify(convertToRaw(editorState.getCurrentContent())) })
+        editArticle({ _id, title, description: JSON.stringify(convertToRaw(editorState.getCurrentContent())) })
        }
        this.setState({
          editorState

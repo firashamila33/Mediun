@@ -36,7 +36,7 @@ class Header extends Component {
     render() {
         let text =`A work by Firas Hamila, I implemented a rich text editing modules
         based on Draft JS plugins  by Facebook & @DraftJsPlugins `
-        let newText = text.split ('\n').map ((item, i) => <p style={{fontSize:'15px',opacity:'0.7',marginBottom:'0px'}} key={i}>{item}</p>);
+        let newText = text.split ('\n').map ((item, i) => <p style={{fontSize:'15px',opacity:'0.9',marginBottom:'0px'}} key={i}>{item}</p>);
         return (
             <header style={{opacity:`${this.state.isScrolled ? '0.85' : '1'}`,position:'fixed',transition:' .3s'}} role="banner">
                 <div className="top-bar" style={{paddingBottom:'0px'}}>
@@ -57,9 +57,9 @@ class Header extends Component {
                                 <div style={{marginTop:'10px'}}>
                                     {newText}
                                     <div style={{display:'flex',flexDirection:'row'}}>
-                                        <p style={{fontSize:'15px',opacity:'0.7'}} >Technologies used : ReactJS, GraphQL, NodeJS ... => view</p>
+                                        <p style={{fontSize:'15px',opacity:'0.9'}} >Technologies used : ReactJS, GraphQL, NodeJS ... => view</p>
                                         
-                                        <a target="_blank" href='https://github.com/firashamila33/Mediun' style={{opacity:'0.5',marginLeft:'10px',marginBottom:'10px'}}>Github Repo</a>
+                                        <a target="_blank" href='https://github.com/firashamila33/Mediun' style={{opacity:'0.9',marginLeft:'10px',marginBottom:'40px'}}>Github Repo</a>
                                     </div>
 
                                 </div>

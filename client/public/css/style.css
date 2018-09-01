@@ -642,7 +642,7 @@ header .navbar .dropdown-menu a {
 }
 
 .blog-entries .blog-entry:hover, .blog-entries .blog-entry:focus {
-  opacity: .7;
+  opacity: 1;
 }
 
 .blog-entries .blog-entry .blog-content-body {

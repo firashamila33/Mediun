@@ -10,7 +10,7 @@ class Home extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h2 className="mb-4">Enjoy Reading</h2>
+                                    <h2 className="mb-4">Mediun ... Enjoy Reading </h2>
                                 </div>
                             </div>
                             <div className="row blog-entries">

@@ -30,8 +30,8 @@ const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
 
 function dataIdFromObject(result) {
   if (result.__typename) {
-    if (result.id !== undefined) {
-      return `${result.__typename}:${result.id}`;
+    if (result._id !== undefined) {
+      return `${result.__typename}:${result._id}`;
     }
   }
   return null;

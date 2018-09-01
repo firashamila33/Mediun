@@ -6,15 +6,19 @@ import { resolvers } from './resolvers';
 
 const typeDefs = `
 type Article {
-  id: ID!
+  _id: ID!
   createdAt: String
   title: String                
   description: String
 }
 
 type ArticleFeed {
-  cursor: String!
+  cursor: Int!
   articles: [Article]!
+}
+
+type ArticleDeletedId {
+  _id: String
 }
 
 
@@ -25,12 +29,14 @@ type Query {
 
 type Mutation {
   addArticle(title: String!, description: String!): Article
-  editArticle(id: ID!, title: String!, description: String!): Article
-  deleteArticle(id: ID!): Article
+  editArticle(_id: ID!, title: String!, description: String!): Article
+  deleteArticle(_id: ID!): Article
 }
 
 type Subscription {
   articleAdded: Article
+  articleDeleted: ArticleDeletedId
+
 }
 
 `;

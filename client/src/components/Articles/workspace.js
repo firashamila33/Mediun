@@ -54,7 +54,7 @@ class ArticleWorkspace extends Component {
     window.scrollTo(0, 0);
     let { editedArticle, selectedArticle, editArticle } = this.props
     let { pathname } = this.props.history.location
-    if (validator.contains(pathname, '/myarticle') && !this.props.selectedArticle.id) {
+    if (validator.contains(pathname, '/myarticle') && !this.props.selectedArticle._id) {
       this.props.history.push('/home')
     }
 
@@ -71,7 +71,6 @@ class ArticleWorkspace extends Component {
     } 
     if(validator.equals(pathname, '/myarticle/edit/preview') || validator.equals(pathname, '/myarticle/edit')){
         this.setState({ title: editedArticle.title })
-        console.log("SETTING STATE OF TITLE  1 :  ", editedArticle.title)
     }
    
     if (validator.contains(pathname, '/display')) {
@@ -90,11 +89,10 @@ class ArticleWorkspace extends Component {
     if (this.state.isNew) {
       window.localStorage.setItem('articleTitle', JSON.stringify(title));
     } else {
-      let { id, description } = editedArticle;
-      editArticle({ id, title: e.target.value, description });
+      let { _id, description } = editedArticle;
+      editArticle({ _id, title: e.target.value, description });
     }
     
-    console.log("SETTING STATE OF TITLE  3 :  ", editedArticle.title);
 
     this.setState({ title });
   }
@@ -117,14 +115,15 @@ class ArticleWorkspace extends Component {
         addArticle: {
           title,
           description,
-          id: Math.round(Math.random() * -1000000),
+          _id: Math.round(Math.random() * -1000000),
           createdAt: moment().unix(),
           __typename: 'Article',
         },
       },
       update: (store, { data: { addArticle } }) => {
         const data = store.readQuery({ query: articlesListQuery });
-        if (!data.articleFeed.articles.find((art) => art.id === addArticle.id)) {
+        
+        if (!data.articleFeed.articles.find((art) => art._id === addArticle._id)) {
           data.articleFeed.articles.unshift(addArticle);
         }
         store.writeQuery({ query: articlesListQuery, data });
@@ -139,14 +138,20 @@ class ArticleWorkspace extends Component {
   }
   _editArticle = () => {
     var { editArticleMutation, history } = this.props;
-    let { id, title, description } = this.props.editedArticle
+    let { _id, title, description } = this.props.editedArticle
     editArticleMutation({
-      variables: { id, title, description },
+      variables: { _id, title, description },
       update: (store, { data: { editArticle } }) => {
         const data = store.readQuery({ query: articlesListQuery });
-        var index = _.findIndex(data.articles, { id,description });
+        var index = _.findIndex(data.articles, { _id,description });
         if(index !== -1){
           data.articleFeed.articles.splice(index, 1, editArticle);
+
+          _.remove(data.articleFeed.articles, function (a) {
+            return a._id == editArticle._id;
+          });
+          data.articleFeed.articles.unshift(editArticle);
+          
         }
         store.writeQuery({ query: articlesListQuery, data });
       },

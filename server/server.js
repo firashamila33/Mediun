@@ -1,17 +1,28 @@
 
 import express from 'express';
+const mongoose = require('mongoose');
+
 import {
   graphqlExpress,
   graphiqlExpress,
 } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-
-import { schema } from './src/schema';
-
 import { execute, subscribe } from 'graphql';
 import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { schema } from './src/schema';
+import keys from './config/keys'
+
+//Mongoose Connection
+mongoose.Promise = global.Promise;
+mongoose.connect(keys.mongoURI);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+require('./models/Article');
+
+
+
 
 
 const PORT = 4002;

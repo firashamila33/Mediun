@@ -28,17 +28,12 @@ class ArticleCard extends Component {
 
     _deleteArticle() {
         let { deleteArticleMutation, article } = this.props
-        console.log("aniiiiiiii")
         deleteArticleMutation({
-            variables: { id: article.id },
+            variables: { _id: article._id },
             update: (store, { data: { deleteArticle } }) => {
-                console.log("aniiiiiiii 222")
-                console.log('STORE: ',store);
-                console.log('deleteArticle  : ',deleteArticle)
                 const data = store.readQuery({ query: articlesListQuery });
-                console.log(data)
                 _.remove(data.articleFeed.articles, function (a) {
-                    return a.id == deleteArticle.id;
+                    return a._id == deleteArticle._id;
                 });
                 store.writeQuery({ query: articlesListQuery, data })
             }
@@ -63,7 +58,6 @@ class ArticleCard extends Component {
             
             videosub = description.substring(description.indexOf(videoIndicator)+videoIndicator.length);
             videoLink = videosub.substring(0,videosub.indexOf(`"`))
-            console.log(videoLink)    
             if(extractYoutubeVideoID(videoLink)){
                 containsVideo = true;
                 emeddedYoutubeLink = `https://www.youtube.com/embed/${extractYoutubeVideoID(videoLink)}`
@@ -84,7 +78,7 @@ class ArticleCard extends Component {
          
 
         return(
-            <a key={article.id} className="col-md-4 cardipost"
+            <div key={article._id} className="col-md-4 cardipost"
                 onMouseEnter={this.hoverOn}
                 onMouseLeave={this.hoverOff}
             >
@@ -99,7 +93,7 @@ class ArticleCard extends Component {
                         <img src={imageLink} style={{width: '350px', height: '234px'}} alt="aa" />
                     }
 
-                    {!containsVideo && !containsImage && <img src={`${process.env.PUBLIC_URL}/images/default_article.png`}  alt="aa" />}
+                    {!containsVideo && !containsImage && <img src={`${process.env.PUBLIC_URL}/images/default_article.png`}  alt="" />}
 
                     <div className="blog-content-body">
                         <div className="post-meta" style={{ marginBottom: '0px' }}>
@@ -124,7 +118,7 @@ class ArticleCard extends Component {
 
                     </div>
                 </div>
-            </a>
+            </div>
             
         )
     }

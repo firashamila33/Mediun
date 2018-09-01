@@ -1,37 +1,31 @@
 import { PubSub, withFilter } from 'graphql-subscriptions'
 import _ from 'lodash'
 import moment from 'moment'
+import mongoose,{ Schema } from 'mongoose'
 import articles from './articlesFakeData'
-let nextId = 20;
+require('../models/Article');
 
+const Article = mongoose.model("articles");
 const pubsub = new PubSub();
-
 
 export const resolvers = {
   Query: {
     articles: () => {
       return articles;
     },
-    articleFeed: (channel, { cursor }) => {
-      if (!cursor || parseInt(cursor)===-1) {
-        cursor =
-          articles[articles.length - 1].createdAt;
+    articleFeed: async (channel, { cursor }) => {
+      const feedSize = 3;
+      if (!cursor || parseInt(cursor) === -1) {
+        const newestArticle = await Article.find().sort({ createdAt: -1 }).limit(1)
+        cursor = newestArticle[0].createdAt;
+        console.log('CURSOOOR 1 : ',cursor)
+      } else {
+        cursor = parseInt(cursor);
       }
-
-      cursor = parseInt(cursor);
-      const limit = 6;
-
-      const newestArticleIndex = articles.findIndex(
-        article => article.createdAt === cursor
-      );
-      const newCursor =
-        articles[newestArticleIndex - limit].createdAt;
-
+      const articlesResult = await Article.find({ createdAt: { $lte: cursor } }).sort({ createdAt: -1 }).limit(feedSize + 1)
+      const newCursor = articlesResult[articlesResult.length-1].createdAt
       const articleFeed = {
-        articles: articles.slice(
-          newestArticleIndex - limit,
-          newestArticleIndex
-        ),
+        articles: articlesResult.slice(0,3),
         cursor: newCursor,
       };
 
@@ -39,31 +33,57 @@ export const resolvers = {
     },
   },
   Mutation: {
-    addArticle: (root, args) => {
+    addArticle: async (root, args) => {
       let { title, description} = args;
-      const newArticle = { id: nextId++, title,description, createdAt: moment().unix()  };
       if (!title ) throw new Error('Title mising');
       if (!description) throw new Error('Description mising');
 
-      articles.push(newArticle);
+      const toSaveArticle = new Article({
+        title,
+        description,
+        createdAt: moment().unix(),
+      })
       
+      var savedArticle = {}
+      try{
+        savedArticle = await toSaveArticle.save();
+      } catch (err) {
+        console.log('ERROR :',err)
+      }
       pubsub.publish('articleAdded', {
-        articleAdded: newArticle,
+        articleAdded: savedArticle,
       });
-      return newArticle;
+      return savedArticle;
     },
     editArticle: (root, args) => {
-      let {id,description,title} = args ;
-      const editedArticle = { id, title, description, createdAt: moment().unix() };
-      var index = _.findIndex(articles, {id});
-      articles.splice(index, 1, editedArticle);
+      let {_id,description,title} = args ;
+      const editedArticle = { _id, title, description, createdAt: moment().unix() };
+      Article.findByIdAndUpdate(_id, editedArticle, {new: true}, function(err, model) {
+        if(err){
+          console.log(`Erro Updating document with Id : ${_id} : `,err)
+          return null
+        }
+        console.log('RESULT : ',model)
+        return model
+      })
       return editedArticle;
     },
-    deleteArticle: (root, args) => {
-      _.remove(articles, function(article) {
-        return article.id == args.id;
-      });
-      return {id:args.id,title:'chay',description:'wallah chay'}; 
+    deleteArticle: async (root, args) => {
+      var deletedArticle = {};
+      try{
+        deletedArticle = await Article.deleteOne({'_id':args._id});
+        if(deletedArticle.ok===1){
+          pubsub.publish('articleDeleted',{
+            articleDeleted:{_id:args._id}
+          })
+          return {_id:args._id}
+        }
+      } catch (err) {
+        console.log('ERROR :',err)
+      }  
+      
+      return null
+      
     },
   },
   Subscription: {
@@ -72,6 +92,12 @@ export const resolvers = {
         return true;
       }),
     },
+    articleDeleted: {
+      subscribe: withFilter(() => pubsub.asyncIterator('articleDeleted'), (payload, variables) => {
+        return true;
+      }),
+    },
   },
+  
   
 };
