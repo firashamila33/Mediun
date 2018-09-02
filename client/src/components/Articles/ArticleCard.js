@@ -8,6 +8,7 @@ import _ from 'lodash'
 import {FiTrash} from 'react-icons/fi'
 import {FiEye} from 'react-icons/fi'
 import moment from 'moment'
+import extractArticleMedia from '../../helpers/extractArticleMedia'
 import { DELETE_MUTATION } from '../../graphql'
 
 class ArticleCard extends Component {
@@ -44,56 +45,27 @@ class ArticleCard extends Component {
 
     render(){
         let { article, selectArticle }=this.props;
-
-        let {description} = article;
-        // GETTING VIDEO URL
-        let containsVideo = false
-        let videoIndicator = `{"type":"draft-js-video-plugin-video","mutability":"IMMUTABLE","data":{"src":"`
-        let indexOfVideoIndicator = description.indexOf(videoIndicator)
-        var videosub = '';
-        let emeddedYoutubeLink = '';
-        let videoLink = ''
-
-        if (indexOfVideoIndicator > -1) {
-            
-            videosub = description.substring(description.indexOf(videoIndicator)+videoIndicator.length);
-            videoLink = videosub.substring(0,videosub.indexOf(`"`))
-            if(extractYoutubeVideoID(videoLink)){
-                containsVideo = true;
-                emeddedYoutubeLink = `https://www.youtube.com/embed/${extractYoutubeVideoID(videoLink)}`
-            }
-        }
-        // GETTING IMAGE URL
-        let containsImage = false
-        let imageIndicator = `{"type":"IMAGE","mutability":"IMMUTABLE","data":{"src":"`
-        let indexOfimageIndicator = description.indexOf(imageIndicator)
-        var imagesub = '';
-        let imageLink = ''
-
-        if (indexOfimageIndicator > -1) {            
-            imagesub = description.substring(description.indexOf(imageIndicator)+imageIndicator.length);
-            imageLink = imagesub.substring(0,imagesub.indexOf(`"`))
-            containsImage = true
-        }
-         
-
+        const media = extractArticleMedia(article.description)
+        
+        
         return(
             <div key={article._id} className="col-md-4 cardipost"
                 onMouseEnter={this.hoverOn}
                 onMouseLeave={this.hoverOff}
             >
                 <div className="blog-entry " style={{ marginTop: '20px' }}>
-                    {containsVideo && (indexOfVideoIndicator > indexOfimageIndicator) &&
-                    <iframe width="350px" height="234"
-                     src={emeddedYoutubeLink}>
-                     
-                    </iframe>
+                    {!media && <img src={`${process.env.PUBLIC_URL}/images/default_article.png`}  alt="" />}
+
+                    {media && media.video &&
+                        <iframe width="350px" height="234"
+                        src={media.emeddedYoutubeLink}>
+                        
+                        </iframe>
                     }
-                    {containsImage && (indexOfimageIndicator > indexOfVideoIndicator) &&
-                        <img src={imageLink} style={{width: '350px', height: '234px'}} alt="aa" />
+                    {media && media.image &&
+                        <img src={media.imageLink} style={{width: '350px', height: '234px'}} alt="aa" />
                     }
 
-                    {!containsVideo && !containsImage && <img src={`${process.env.PUBLIC_URL}/images/default_article.png`}  alt="" />}
 
                     <div className="blog-content-body">
                         <div className="post-meta" style={{ marginBottom: '0px' }}>
@@ -102,7 +74,7 @@ class ArticleCard extends Component {
                                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                                     <a style={{ backgroundColor: 'Transparent' }} onClick={() => {
                                         selectArticle(article);
-                                        this.props.history.push('/myarticle/display')
+                                        this.props.history.push('/workspace/myarticle/display')
                                     }}>
                                         <FiEye size={'20'} color={`${this.state.hover ? 'blue' : 'grey'}`} />
                                     </a>
@@ -133,14 +105,4 @@ export default withRouter(
 
 
 
-function extractYoutubeVideoID(url){
-    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    if ( match && match[7].length == 11 ){
-        return match[7];
-    }else{
-        return ''
-    }
-}
-
-                
+   

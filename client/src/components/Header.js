@@ -76,7 +76,7 @@ class Header extends Component {
                                     </li>
 
                                     <li className="nav-item">
-                                        <Link to={"/newarticle/edit"}  style={{opacity:`${this.state.location === '/newarticle/edit' ? '1' : '0'}`,transition:' .3s'}}className="nav-link"
+                                        <Link to={"/workspace/newarticle/edit"}  style={{opacity:`${this.state.location === '/newarticle/edit' ? '1' : '0'}`,transition:' .3s'}}className="nav-link"
                                             onClick={() => this.setState({ location: '/newarticle/edit' })}
                                             style={{marginLeft:'12px',fontSize:'30px'}}
                                         >New Article</Link>

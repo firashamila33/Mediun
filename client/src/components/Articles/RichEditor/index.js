@@ -136,26 +136,23 @@ const plugins = [
         description: '',
         editorState: createEditorStateWithText(text),
       };
-      const content = window.localStorage.getItem('articleContent');
-
-
-      if (content) {
-        this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
-      } else {
-        //this.state.editorState = EditorState.createEmpty(); <-- for empty editor content 
-        this.state.editorState = EditorState.createWithContent(convertFromRaw(preloadedContent));
-      }
+      
     }
 
     componentWillMount(){
-      let { isDisplay, isEditedArticle, editedArticle, selectedArticle } = this.props;
+      let { isNew, isDisplay, selectedArticle } = this.props;
       
 
-      if(isDisplay){
-        this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(selectedArticle.description)) )}) // <<--- content of selectedArticle
+      if(isNew){
+        const content = window.localStorage.getItem('articleContent');
+        if (content) {
+          this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
+        } else {
+          this.state.editorState = EditorState.createWithContent(convertFromRaw(preloadedContent));
+        }
       }
-      if(isEditedArticle){
-        this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(editedArticle.description)) )}) 
+      if(isDisplay){
+        this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(selectedArticle.description)) )}) 
       }
     
     }

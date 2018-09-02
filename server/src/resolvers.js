@@ -55,18 +55,28 @@ export const resolvers = {
       });
       return savedArticle;
     },
-    editArticle: (root, args) => {
+    editArticle: async (root, args) => {
       let {_id,description,title} = args ;
-      const editedArticle = { _id, title, description, createdAt: moment().unix() };
-      Article.findByIdAndUpdate(_id, editedArticle, {new: true}, function(err, model) {
-        if(err){
-          console.log(`Erro Updating document with Id : ${_id} : `,err)
-          return null
-        }
-        console.log('RESULT : ',model)
-        return model
-      })
-      return editedArticle;
+      var editedArticle = { _id, title, description, createdAt: moment().unix() };
+      var newArticle = {}
+
+      try{
+        newArticle = await Article.findOneAndUpdate({_id},{$set: editedArticle},{new: true, upsert: true}); 
+        // new -->returns the modified doc ,, upsert <--create if not exist in case a user deletes thedocument before finishing update
+        console.log('REEEEES\n',editedArticle)
+        
+        console.log('RESPONCEE REAL\n',newArticle)
+        // let { _id, title, description, createdAt} = newArticle
+
+          pubsub.publish('articleEdited', {
+            articleEdited: {_id:  newArticle._id.toString(), title: newArticle.title, description: newArticle.description, createdAt: newArticle.createdAt},
+          });
+
+          return {_id:  newArticle._id.toString(), title: newArticle.title, description: newArticle.description, createdAt: newArticle.createdAt}
+        } catch (err) {
+          console.log('ERROR While updating the document:',err)
+        }  
+      
     },
     deleteArticle: async (root, args) => {
       var deletedArticle = {};
@@ -94,6 +104,11 @@ export const resolvers = {
     },
     articleDeleted: {
       subscribe: withFilter(() => pubsub.asyncIterator('articleDeleted'), (payload, variables) => {
+        return true;
+      }),
+    },
+    articleEdited: {
+      subscribe: withFilter(() => pubsub.asyncIterator('articleEdited'), (payload, variables) => {
         return true;
       }),
     },

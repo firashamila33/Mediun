@@ -73,3 +73,13 @@ export const articleDeleteSubscription = gql`
     }
   }
 `;
+export const articleEditSubscription = gql`
+  subscription articleEdited{
+    articleEdited{
+      _id
+      title
+      description
+      createdAt
+    }
+  }
+`;

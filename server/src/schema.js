@@ -17,7 +17,7 @@ type ArticleFeed {
   articles: [Article]!
 }
 
-type ArticleDeletedId {
+type ArticleId {
   _id: String
 }
 
@@ -35,8 +35,8 @@ type Mutation {
 
 type Subscription {
   articleAdded: Article
-  articleDeleted: ArticleDeletedId
-
+  articleDeleted: ArticleId
+  articleEdited: Article
 }
 
 `;
