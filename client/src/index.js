@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
+import {
+  SubscriptionClient,
+  addGraphQLSubscriptions
+} from "subscriptions-transport-ws";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
@@ -14,20 +17,19 @@ import {
   createNetworkInterface
 } from "react-apollo";
 
-
-const networkInterface = createNetworkInterface({ 
-  uri: 'http://localhost:4002/graphql',
-  credentials: 'same-origin',
+const networkInterface = createNetworkInterface({
+  uri: "http://localhost:4002/graphql",
+  credentials: "same-origin"
 });
-
+//GraphQL subscriptions (websocket) endpoint
 const wsClient = new SubscriptionClient(`ws://localhost:4002/subscriptions`, {
-  reconnect: true,
+  reconnect: true
 });
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
   networkInterface,
-  wsClient,
+  wsClient
 );
-
+//to store all objects in appolo caching store with __typname and id
 function dataIdFromObject(result) {
   if (result.__typename) {
     if (result._id !== undefined) {
@@ -39,7 +41,7 @@ function dataIdFromObject(result) {
 
 const client = new ApolloClient({
   networkInterface: networkInterfaceWithSubscriptions,
-  dataIdFromObject,
+  dataIdFromObject
 });
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
@@ -49,7 +51,6 @@ ReactDOM.render(
     <Provider store={store}>
       <App />
     </Provider>
-     
   </ApolloProvider>,
 
   document.getElementById("root")

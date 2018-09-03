@@ -8,8 +8,6 @@ export default class ImageAdd extends Component {
     open: false,
   };
 
-  // When the popover is open and users click anywhere on the page,
-  // the popover should close
   componentDidMount() {
     document.addEventListener('click', this.closePopover);
   }
@@ -18,7 +16,6 @@ export default class ImageAdd extends Component {
     document.removeEventListener('click', this.closePopover);
   }
 
-  // Note: make sure whenever a click happens within the popover it is not closed
   onPopoverClick = () => {
     this.preventNextClose = true;
   }

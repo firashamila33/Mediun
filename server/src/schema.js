@@ -1,8 +1,6 @@
-import {
-  makeExecutableSchema,
-} from 'graphql-tools';
+import { makeExecutableSchema } from "graphql-tools";
 
-import { resolvers } from './resolvers';
+import { resolvers } from "./resolvers";
 
 const typeDefs = `
 type Article {
@@ -13,8 +11,8 @@ type Article {
 }
 
 type ArticleFeed {
-  cursor: Int!
-  articles: [Article]!
+  cursor: Int
+  articles: [Article]
 }
 
 type ArticleId {

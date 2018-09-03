@@ -1,12 +1,12 @@
-import React,{ Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../../actions' 
+import * as actions from '../../actions'
 import { withRouter } from 'react-router-dom'
 import { graphql } from 'react-apollo';
-import {articlesListQuery} from '../../graphql'
+import { articlesListQuery } from '../../graphql'
 import _ from 'lodash'
-import {FiTrash} from 'react-icons/fi'
-import {FiEye} from 'react-icons/fi'
+import { FiTrash } from 'react-icons/fi'
+import { FiEye } from 'react-icons/fi'
 import moment from 'moment'
 import extractArticleMedia from '../../helpers/extractArticleMedia'
 import { DELETE_MUTATION } from '../../graphql'
@@ -34,6 +34,7 @@ class ArticleCard extends Component {
             update: (store, { data: { deleteArticle } }) => {
                 const data = store.readQuery({ query: articlesListQuery });
                 _.remove(data.articleFeed.articles, function (a) {
+                    // eslint-disable-next-line
                     return a._id == deleteArticle._id;
                 });
                 store.writeQuery({ query: articlesListQuery, data })
@@ -46,8 +47,6 @@ class ArticleCard extends Component {
     render(){
         let { article, selectArticle }=this.props;
         const media = extractArticleMedia(article.description)
-        
-        
         return(
             <div key={article._id} className="col-md-4 cardipost"
                 onMouseEnter={this.hoverOn}
@@ -65,8 +64,6 @@ class ArticleCard extends Component {
                     {media && media.image &&
                         <img src={media.imageLink} style={{width: '350px', height: '234px'}} alt="aa" />
                     }
-
-
                     <div className="blog-content-body">
                         <div className="post-meta" style={{ marginBottom: '0px' }}>
                             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -82,12 +79,9 @@ class ArticleCard extends Component {
                                         <FiTrash size={'20'} color={`${this.state.hover ? 'red' : 'grey'}`} />
                                     </a>
                                 </div>
-
                             </div>
-
                         </div>
                         <h4>{article.title}</h4>
-
                     </div>
                 </div>
             </div>

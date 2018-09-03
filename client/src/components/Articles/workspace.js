@@ -12,7 +12,7 @@ import { FiEye } from 'react-icons/fi'
 import { FiEdit } from 'react-icons/fi'
 import { FiEdit3 } from 'react-icons/fi'
 import { FiCheckSquare } from 'react-icons/fi'
-import RichEditor from './RichEditor'
+import RichEditor from '../RichEditor'
 import { SUBMIT_MUTATION, EDIT_MUTATION, articlesListQuery } from '../../graphql'
 
 const style = {
@@ -41,17 +41,16 @@ class ArticleWorkspace extends Component {
     super();
     this.state = {
       title: '',
-      isPreview: false,
-      isNew: false, //<-- this is to know if the user opened an article from preview or is creating  a new article
-      isDisplay: false, // <--this one is to know if it's the user opened an old article for read or for edit
+      isPreview: false,// << true: is previewing the Article after editing
+      isNew: false, //<-- true:is creating a new Article , false : the ser opened an existing Article
+      isDisplay: false, // <-- true:  is opening a article only for display 
       loading: true,
     }
     this.handleTitleChange = this.handleTitleChange.bind(this)
   }
 
   componentWillMount() {
-    //window.scrollTo(0, 0);
-    let { selectedArticle, editArticle } = this.props
+    let { selectedArticle } = this.props
     let { pathname } = this.props.history.location
     if (validator.contains(pathname, '/workspace/myarticle') && !this.props.selectedArticle._id) {
       this.props.history.push('/home')
@@ -63,11 +62,9 @@ class ArticleWorkspace extends Component {
       if (title) {
         this.setState({ title })
       }
+    }
 
-    } 
-   
     if (validator.contains(pathname, '/display')) {
-      //editArticle(selectedArticle)
       this.setState({ isDisplay: true, title: selectedArticle.title })
     }
   }
@@ -79,9 +76,9 @@ class ArticleWorkspace extends Component {
   _handleEditViewBtnActions() {
     let { isPreview, isNew } = this.state
     let path = '';
-    if (isNew ) { path = '/workspace/newarticle/edit'; } else { path = '/workspace/myarticle/edit' };
+    if (isNew) { path = '/workspace/newarticle/edit'; } else { path = '/workspace/myarticle/edit' };
     if (!isPreview) { path += '/preview' };
-    this.setState({ isPreview: !this.state.isPreview})
+    this.setState({ isPreview: !this.state.isPreview })
     this.props.history.push(path);
   }
 
@@ -94,7 +91,6 @@ class ArticleWorkspace extends Component {
       let { _id, description } = editedArticle;
       editArticle({ _id, title: e.target.value, description });
     }
-    
 
     this.setState({ title });
   }
@@ -123,7 +119,7 @@ class ArticleWorkspace extends Component {
         },
       },
       update: (store, { data: { addArticle } }) => {
-        const data = store.readQuery({ query: articlesListQuery });        
+        const data = store.readQuery({ query: articlesListQuery });
         if (!data.articleFeed.articles.find((art) => art._id === addArticle._id)) {
           data.articleFeed.articles.unshift(addArticle);
         }
@@ -156,12 +152,13 @@ class ArticleWorkspace extends Component {
         console.log(editArticle)
         if (data.articleFeed.articles.find((art) => art._id === editArticle._id)) {
           _.remove(data.articleFeed.articles, function (a) {
+            // eslint-disable-next-line
             return a._id == editArticle._id;
           });
           data.articleFeed.articles.unshift(editArticle);
         }
         store.writeQuery({ query: articlesListQuery, data });
-       
+
       },
     }).then(() => {
       editArticle({})
@@ -222,12 +219,10 @@ class ArticleWorkspace extends Component {
               </div>
                   </div>
           </div>
-
           <div className="form-group">
             <label style={{ color: "#f35c52", opacity: `${isPreview || isDisplay ? '0' : '1'}`, transition: ' .3s' }}>Description</label>
             <RichEditor isReadOnly={isDisplay || isPreview} isNew={isNew} isEditedArticle={isEditedArticle} isDisplay={isDisplay}/>
           </div>
-
         </div>
       </section>
     );
@@ -237,9 +232,6 @@ class ArticleWorkspace extends Component {
 function mapStateToProps({selectedArticle, editedArticle}){
   return {selectedArticle, editedArticle}
 }
-
-
-
 
 export default connect(
   mapStateToProps,
