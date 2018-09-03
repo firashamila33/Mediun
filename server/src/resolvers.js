@@ -8,25 +8,22 @@ require("../models/Article");
 const Article = mongoose.model("articles");
 const pubsub = new PubSub();
 
-async function savoo(tosave){
-  try {
-     await tosave.save();
-  } catch (err) {
-    console.log("ERROR :", err);
-  }
-}
-  //   articles.map((article)=>{
-  //     const tosave = Article({
-  //       title: article.title,
-  //           description: article.description,
-  //           createdAt: article.createdAt
-  //     })
-      
-  //     savoo(tosave)
-
-      
-  // })
-
+// faking data 
+// async function savoo(tosave){
+//   try {
+//     await tosave.save();
+//   } catch (err) {
+//     console.log("ERROR :", err);
+//   }
+// }
+//   articles.map((article)=>{
+//     const tosave = Article({
+//       title: article.title,
+//           description: article.description,
+//           createdAt: article.createdAt
+//     })
+//     faker(tosave)
+// })
 
 export const resolvers = {
   Query: {
