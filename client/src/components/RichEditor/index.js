@@ -92,8 +92,8 @@ const resizeablePlugin = createResizeablePlugin();
 const alignmentPlugin = createAlignmentPlugin();
 const { AlignmentTool } = alignmentPlugin;
 const decorator = composeDecorators(
-  resizeablePlugin.decorator,
-  alignmentPlugin.decorator,
+  //resizeablePlugin.decorator
+   alignmentPlugin.decorator,
   focusPlugin.decorator
 );
 const imagePlugin = createImagePlugin({ decorator });
@@ -131,7 +131,7 @@ class CustomToolbarEditor extends Component {
     super();
     this.state = {
       description: "",
-      editorState: createEditorStateWithText(text)
+      editorState: EditorState.createEmpty()
     };
   }
 

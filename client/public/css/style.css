@@ -7,6 +7,7 @@ body {
   color: #6c757d;
 }
 
+
 a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
@@ -56,6 +57,11 @@ header .navbar {
   }
 }
 
+@media only screen and (width: 1366px){
+  div.projectdescr {
+    display: 'none';
+  }
+}
 header .navbar .navbar-nav.absolute-right {
   position: absolute;
   right: 0;
