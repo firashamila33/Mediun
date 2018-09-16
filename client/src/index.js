@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import App from "./App";
+import keys from "../config/keys";
 
 import reducers from "./Reducers";
 
@@ -18,11 +19,11 @@ import {
 } from "react-apollo";
 
 const networkInterface = createNetworkInterface({
-  uri: "http://localhost:4002/graphql",
+  uri: `${keys.redirectDomain}/grapĥql`,
   credentials: "same-origin"
 });
 //GraphQL subscriptions (websocket) endpoint
-const wsClient = new SubscriptionClient(`ws://localhost:4002/subscriptions`, {
+const wsClient = new SubscriptionClient(keys.subscriptionEndpoint, {
   reconnect: true
 });
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
