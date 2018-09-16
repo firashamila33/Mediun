@@ -1,1 +1,4 @@
 /node_modules
+dev.js
+prod.js
+package-lock.json

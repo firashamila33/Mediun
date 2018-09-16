@@ -22,9 +22,7 @@ const networkInterface = createNetworkInterface({
   uri: `${keys.redirectDomain}/graphql`,
   credentials: "same-origin"
 });
-{
-  console.log(keys);
-}
+
 //GraphQL subscriptions (websocket) endpoint
 const wsClient = new SubscriptionClient(keys.subscriptionEndpoint, {
   reconnect: true
