@@ -1,5 +1,5 @@
 module.exports = {
   mongoURI: "//mediun-dev:gikoinndfr14@ds131721.mlab.com:31721/mediun-dev",
-  redirectDomain: "https://tranquil-atoll-33654.herokuapp.com",
-  subscriptionEndpoint: "wss://tranquil-atoll-33654.herokuapp.com/subscriptions"
+  redirectDomain: "https://mediun.herokuapp.com",
+  subscriptionEndpoint: "wss://mediun.herokuapp.com/subscriptions"
 };
