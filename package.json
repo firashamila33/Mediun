@@ -11,7 +11,7 @@
     "client": "cd client/ && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "start": "npm run server",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "MIT",
