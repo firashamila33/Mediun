@@ -1,0 +1,15 @@
+{
+  "name": "tutorial-server",
+  "version": "1.0.0",
+  "description": "A simple GraphQL server",
+  "main": "server.js",
+  "engines": {
+    "node": "10.6.0",
+    "npm": "6.4.1"
+  },
+  "scripts": {
+    "start": "cd server && npm start"
+  },
+  "author": "",
+  "license": "MIT"
+}
