@@ -42,7 +42,7 @@
     "subscriptions-transport-ws": "^0.7.3",
     "validator": "^10.7.0"
   },
-  "homepage": "https://tranquil-atoll-33654.herokuapp.com/home",
+  "homepage": "https://tranquil-atoll-33654.herokuapp.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
