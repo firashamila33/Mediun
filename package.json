@@ -7,9 +7,13 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "start": "cd server/ && npm install && npm start",
+    "server": "cd server/ && npm install && npm start",
+    "client": "cd client/ && npm start",
+    "start": "concurrently \"npm run server\" \"npm run client\" ",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build"
   },
   "author": "",
-  "license": "MIT"
-}
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }}
