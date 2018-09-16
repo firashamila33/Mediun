@@ -19,7 +19,7 @@ import {
 } from "react-apollo";
 
 const networkInterface = createNetworkInterface({
-  uri: `${keys.redirectDomain}/grapĥql`,
+  uri: `${keys.redirectDomain}/graphql`,
   credentials: "same-origin"
 });
 {
