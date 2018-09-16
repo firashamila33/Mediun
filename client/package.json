@@ -43,6 +43,7 @@
     "validator": "^10.7.0"
   },
   "homepage": "https://tranquil-atoll-33654.herokuapp.com",
+  "/graphql": "https:localhost:4002",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

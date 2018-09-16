@@ -36,7 +36,7 @@ server.use(
   "/graphiql",
   graphiqlExpress({
     endpointURL: "/graphql",
-    subscriptionsEndpoint: keys.subscriptionsEndpoint
+    subscriptionsEndpoint: keys.subscriptionEndpoint
   })
 );
 
