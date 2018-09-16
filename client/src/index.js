@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import App from "./App";
-import keys from "../../server/config/keys";
+import keys from "./config/keys";
 
 import reducers from "./Reducers";
 
@@ -22,6 +22,9 @@ const networkInterface = createNetworkInterface({
   uri: `${keys.redirectDomain}/grapĥql`,
   credentials: "same-origin"
 });
+{
+  console.log(keys);
+}
 //GraphQL subscriptions (websocket) endpoint
 const wsClient = new SubscriptionClient(keys.subscriptionEndpoint, {
   reconnect: true
