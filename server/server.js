@@ -46,6 +46,7 @@ const ws = createServer(server);
 if (process.env.NODE_ENV === "production") {
   server.use(express.static("client/build"));
   const path = require("path");
+  console.log(__dirname);
   server.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
