@@ -17,10 +17,9 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 require("./models/Article");
 
-const PORT = 4002;
 const server = express();
 
-server.use("*", cors({ origin: "http://localhost:3000" }));
+server.use("*", cors({ origin: keys.redirectDomain }));
 
 server.use(
   "/graphql",
@@ -34,15 +33,24 @@ server.use(
   "/graphiql",
   graphiqlExpress({
     endpointURL: "/graphql",
-    subscriptionsEndpoint: `ws://localhost:4002/subscriptions`
+    subscriptionsEndpoint: keys.subscriptionsEndpoint
   })
 );
 
 // We wrap the express server so that we can attach the WebSocket for subscriptions
 const ws = createServer(server);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
+const PORT = process.env.PORT || 4002;
 ws.listen(PORT, () => {
-  console.log(`GraphQL Server is now running on http://localhost:${PORT}`);
+  console.log(`GraphQL Server is now running on ${PORT}`);
 
   // Set up the WebSocket for handling GraphQL subscriptions
   new SubscriptionServer(
