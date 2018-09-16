@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import App from "./App";
-import keys from "../config/keys";
+import keys from "./config/keys";
 
 import reducers from "./Reducers";
 
