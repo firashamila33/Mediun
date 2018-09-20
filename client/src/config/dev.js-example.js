@@ -1,6 +1,4 @@
 module.exports = {
-  mongoURI:
-    "<yourMongoUri>",
-  redirectDomain: "http://localhost:3000",
+  redirectDomain: "http://localhost:4002",
   subscriptionEndpoint: "ws://localhost:4002/subscriptions"
 };

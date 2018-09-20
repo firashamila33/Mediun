@@ -135,9 +135,8 @@ class CustomToolbarEditor extends Component {
     };
   }
 
-  componentWillMount() {
-    let { isNew, isDisplay, selectedArticle } = this.props;
-
+  componentDidMount() {
+    let {isReadOnly, isNew, isDisplay, selectedArticle } = this.props;
     if (isNew) {
       const content = window.localStorage.getItem("articleContent");
       if (content) {
@@ -150,7 +149,7 @@ class CustomToolbarEditor extends Component {
         })
       }
     }
-    if (isDisplay) {
+    else {
       this.setState({
         editorState: EditorState.createWithContent(
           convertFromRaw(JSON.parse(selectedArticle.description))
@@ -164,7 +163,7 @@ class CustomToolbarEditor extends Component {
   }
 
   onChange = editorState => {
-    let { isNew, isEditedArticle, editArticle } = this.props;
+    let { isNew, editArticle } = this.props;
     let { _id, title } = this.props.editedArticle;
     if (isNew) {
       window.localStorage.setItem(
@@ -172,7 +171,7 @@ class CustomToolbarEditor extends Component {
         JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       ); 
     }// <<--- do not save to localstorage if its not a new article
-    if (isEditedArticle) {
+    else {
       editArticle({
         _id,
         title,
@@ -191,6 +190,7 @@ class CustomToolbarEditor extends Component {
   };
   render() {
     let { isReadOnly } = this.props;
+    console.log('renderiiing')
     return (
       <div>
         <div
