@@ -1,4 +1,6 @@
-# Mediun
+# Mediun 
+Online Demo : https://mediun.herokuapp.com/
+
 A blog for posting articles built on top of Facebook Rich text editing Using 
   - React/Redux
   - NodeJS
@@ -19,14 +21,14 @@ $ npm install
 ### Run Mediun server
 ```sh
 $ cd Mediun
-$ cd npm run server
+$ npm run server
 ```
 
 ### Run Mediun client
 open a new terminal and :
 ```sh
 $ cd Mediun
-$ cd npm run client
+$ npm run client
 ```
 ### see the Client in action
 visit http://localhost:3000
