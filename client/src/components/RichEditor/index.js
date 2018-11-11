@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Editor, {
-  createEditorStateWithText,
   composeDecorators
 } from "draft-js-plugins-editor";
 import { convertToRaw, convertFromRaw, EditorState } from "draft-js";
@@ -123,8 +122,7 @@ const plugins = [
   alignmentPlugin,
   hashtagPlugin
 ];
-const text = `you can set a default text to apear by default for 
-                each time the component is mounted : Mediun BLOG,`;
+
 
 class CustomToolbarEditor extends Component {
   constructor() {
@@ -136,7 +134,7 @@ class CustomToolbarEditor extends Component {
   }
 
   componentDidMount() {
-    let {isReadOnly, isNew, isDisplay, selectedArticle } = this.props;
+    let {isNew, selectedArticle } = this.props;
     if (isNew) {
       const content = window.localStorage.getItem("articleContent");
       if (content) {

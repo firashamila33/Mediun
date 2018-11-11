@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import { graphql, compose } from 'react-apollo';
-import validator from 'validator';
 import { connect } from 'react-redux'
 import moment from 'moment'
 
-import _ from 'lodash'
 import * as actions from '../../actions'
 
 import { FiSend } from 'react-icons/fi'
 import { FiEye } from 'react-icons/fi'
 import { FiEdit } from 'react-icons/fi'
-import { FiEdit3 } from 'react-icons/fi'
-import { FiCheckSquare } from 'react-icons/fi'
 import RichEditor from '../RichEditor'
-import { SUBMIT_MUTATION, EDIT_MUTATION, articlesListQuery } from '../../graphql'
+import { SUBMIT_MUTATION, articlesListQuery } from '../../graphql'
 
 const style = {
   toolButton: {

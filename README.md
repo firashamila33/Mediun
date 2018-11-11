@@ -1,8 +1,40 @@
-## Mediun
+# Mediun
 A blog for posting articles built on top of Facebook Rich text editing Using 
-- ReactJS
-- NodeJS
-- GraphQL
+  - React/Redux
+  - NodeJS
+  - GraphQL
 
-## NB
-full Documentation is coming soo soon ,,, 
+### Installation
+Installing client dependencies.
+
+```sh
+$ cd Mediun/client
+$ npm install
+```
+installing server dependencies
+```sh
+$ cd Mediun/server
+$ npm install
+```
+### Run Mediun server
+```sh
+$ cd Mediun
+$ cd npm run server
+```
+
+### Run Mediun client
+open a new terminal and :
+```sh
+$ cd Mediun
+$ cd npm run client
+```
+### see the Client in action
+visit http://localhost:3000
+
+## open GraphiQl queries/mutations editor
+visit http://localhost:4002/graphiql
+
+
+
+
+

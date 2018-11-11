@@ -92,7 +92,7 @@ class Header extends Component {
                                     <div style={{marginTop:'10px'}}>
                                         <strong>
                                             made with <i className="fa fa-heart-o" aria-hidden="true" />{" "} by{" "}
-                                            <a href="https://github.com/firashamila33" target="_blank">
+                                            <a href="https://github.com/firashamila33" target="_blank"  rel="noopener noreferrer">
                                                 Firas Hamila
                                             </a>
                                         </strong>
@@ -105,7 +105,7 @@ class Header extends Component {
                                         <div style={{display:'flex',flexDirection:'row'}}>
                                             <p style={{fontSize:'15px'}} >Technologies used : ReactJS, GraphQL, NodeJS ... => view</p>
                                             
-                                            <a target="_blank" href='https://github.com/firashamila33/Mediun' style={{opacity:'0.9',marginLeft:'10px'}}>Github Repo</a>
+                                            <a target="_blank" href='https://github.com/firashamila33/Mediun'  rel="noopener noreferrer" style={{opacity:'0.9',marginLeft:'10px'}}>Github Repo</a>
                                         </div>
 
                                     </div>

@@ -1,7 +1,7 @@
 {
-  "name": "tutorial-server",
+  "name": "Mediun",
   "version": "1.0.0",
-  "description": "A simple GraphQL server",
+  "description": "",
   "engines": {
     "node": "10.6.0",
     "npm": "6.4.1"
@@ -9,13 +9,10 @@
   "scripts": {
     "server": "npm run start --prefix server",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start": "cd server/ && npm install && npm start",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "concurrently": "^4.0.1"
-  }
+  "license": "MIT"
 }

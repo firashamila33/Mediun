@@ -56,7 +56,7 @@ class ArticleCard extends Component {
                     {!media && <img src={`${process.env.PUBLIC_URL}/images/default_article.png`}  alt="" />}
 
                     {media && media.video &&
-                        <iframe width="350px" height="234"
+                        <iframe title={`articleVideo ${article._id}`} width="350px" height="234" 
                         src={media.emeddedYoutubeLink}>
                         
                         </iframe>

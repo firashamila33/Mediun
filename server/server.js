@@ -40,7 +40,7 @@ server.use(
   })
 );
 
-// We wrap the express server so that we can attach the WebSocket for subscriptions
+// wrap the express server so that we can attach the WebSocket for subscriptions
 const ws = createServer(server);
 
 if (process.env.NODE_ENV === "production") {
@@ -56,6 +56,7 @@ if (process.env.NODE_ENV === "production") {
 const PORT = process.env.PORT || 4002;
 ws.listen(PORT, () => {
   console.log(`GraphQL Server is now running on ${PORT}`);
+  console.log(`open GraphiQL queries/mutations editor : http://localhost:4002/graphiql`);
 
   // Set up the WebSocket for handling GraphQL subscriptions
   new SubscriptionServer(
