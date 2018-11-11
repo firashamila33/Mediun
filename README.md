@@ -16,6 +16,14 @@ installing server dependencies
 $ cd Mediun/server
 $ npm install
 ```
+### Setting Keys up
+```sh
+$ cd Mediun/server/config
+```
+- rename dev.js-example.txt to dev.js
+- rename prod.js-example.txt to prod.js
+- set up your MongoURI at dev.js file in orger to connect the server to mongoDB 
+
 ### Run Mediun
 ```sh
 $ cd Mediun
